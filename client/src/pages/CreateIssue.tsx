@@ -4,7 +4,8 @@ import { useForm } from 'react-hook-form'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 import { issuesAPI, authAPI } from '@/services/api'
-import { IssuePriority, getPriorityDisplayName } from '@shared/utils'
+import { IssuePriority } from '../../../shared/src/constants'
+import { getPriorityDisplayName } from '../../../shared/src/utils'
 import toast from 'react-hot-toast'
 
 interface CreateIssueForm {

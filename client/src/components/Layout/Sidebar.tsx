@@ -6,7 +6,7 @@ import {
   UsersIcon,
 } from '@heroicons/react/24/outline'
 import { useAuthStore } from '@/store/authStore'
-import { UserRole } from '@shared/constants'
+import { UserRole } from '../../../../shared/src/constants'
 import clsx from 'clsx'
 
 const Sidebar = () => {

@@ -10,12 +10,8 @@ import {
 } from '@heroicons/react/24/outline'
 import { issuesAPI } from '@/services/api'
 import IssueCard from '@/components/IssueCard'
-import { 
-  IssueStatus, 
-  IssuePriority, 
-  getStatusDisplayName, 
-  getPriorityDisplayName 
-} from '@shared/utils'
+import { IssueStatus, IssuePriority } from '../../../shared/src/constants'
+import { getStatusDisplayName, getPriorityDisplayName } from '../../../shared/src/utils'
 import clsx from 'clsx'
 
 const Issues = () => {

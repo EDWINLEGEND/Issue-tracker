@@ -28,7 +28,7 @@ export const initializeSocket = (io: Server) => {
       }
 
       // Attach user info to socket
-      socket.userId = user._id.toString();
+      socket.userId = (user._id as any).toString();
       socket.userRole = user.role;
       
       next();

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
 import { useAuthStore } from '@/store/authStore'
-import { SOCKET_EVENTS } from '@shared/constants'
+import { SOCKET_EVENTS } from '../../../shared/src/constants'
 import toast from 'react-hot-toast'
 
 interface SocketContextType {

@@ -3,13 +3,11 @@ import {
   ExclamationTriangleIcon,
   ClockIcon,
   CheckCircleIcon,
-  XCircleIcon,
   PlusIcon
 } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom'
 import { dashboardAPI } from '@/services/api'
-import { IssueStatus, getStatusDisplayName } from '@shared/utils'
-import { formatRelativeTime } from '@shared/utils'
+import { formatRelativeTime } from '../../../shared/src/utils'
 
 const Dashboard = () => {
   const { data: stats, isLoading } = useQuery({

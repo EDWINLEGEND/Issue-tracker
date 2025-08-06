@@ -30,7 +30,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     });
 
     // Generate token
-    const token = generateToken(user._id.toString());
+    const token = generateToken((user._id as any).toString());
 
     res.status(201).json({
       success: true,
@@ -86,7 +86,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     // Generate token
-    const token = generateToken(user._id.toString());
+    const token = generateToken((user._id as any).toString());
 
     // Remove password from response
     const userResponse = user.toJSON();

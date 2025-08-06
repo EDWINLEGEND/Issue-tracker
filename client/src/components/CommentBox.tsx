@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { PaperAirplaneIcon } from '@heroicons/react/24/outline'
 import { useAuthStore } from '@/store/authStore'
 import { commentsAPI } from '@/services/api'
-import { Comment } from '@shared/types'
-import { formatRelativeTime } from '@shared/utils'
+import { Comment } from '../../../shared/src/types'
+import { formatRelativeTime } from '../../../shared/src/utils'
 import toast from 'react-hot-toast'
 
 interface CommentBoxProps {
@@ -23,7 +23,7 @@ const CommentBox: React.FC<CommentBoxProps> = ({
   onCommentAdded 
 }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { user } = useAuthStore()
+  const { } = useAuthStore()
   
   const {
     register,

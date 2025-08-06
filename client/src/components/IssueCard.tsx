@@ -5,14 +5,13 @@ import {
   ChatBubbleLeftIcon,
   TagIcon 
 } from '@heroicons/react/24/outline'
-import { Issue } from '@shared/types'
+import { Issue } from '../../../shared/src/types'
+import { STATUS_COLORS, PRIORITY_COLORS } from '../../../shared/src/constants'
 import { 
-  STATUS_COLORS, 
-  PRIORITY_COLORS, 
   getStatusDisplayName, 
   getPriorityDisplayName,
   formatRelativeTime 
-} from '@shared/utils'
+} from '../../../shared/src/utils'
 import clsx from 'clsx'
 
 interface IssueCardProps {

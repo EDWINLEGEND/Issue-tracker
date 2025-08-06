@@ -13,16 +13,12 @@ import { issuesAPI, commentsAPI } from '@/services/api'
 import { useAuthStore } from '@/store/authStore'
 import { useSocket } from '@/contexts/SocketContext'
 import CommentBox from '@/components/CommentBox'
+import { IssueStatus, IssuePriority, UserRole, STATUS_COLORS, PRIORITY_COLORS } from '../../../shared/src/constants'
 import { 
-  STATUS_COLORS, 
-  PRIORITY_COLORS,
-  IssueStatus,
-  IssuePriority,
-  UserRole,
   getStatusDisplayName, 
   getPriorityDisplayName,
   formatDate
-} from '@shared/utils'
+} from '../../../shared/src/utils'
 import clsx from 'clsx'
 import toast from 'react-hot-toast'
 
@@ -110,7 +106,7 @@ const IssueDetail = () => {
     }
   }
 
-  const handleCommentAdded = (comment: any) => {
+  const handleCommentAdded = () => {
     refetchComments()
   }
 
@@ -192,10 +188,10 @@ const IssueDetail = () => {
               {issue.title}
             </h1>
             <div className="flex items-center space-x-2">
-              <span className={clsx('badge', STATUS_COLORS[issue.status])}>
+              <span className={clsx('badge', STATUS_COLORS[issue.status as keyof typeof STATUS_COLORS])}>
                 {getStatusDisplayName(issue.status)}
               </span>
-              <span className={clsx('badge', PRIORITY_COLORS[issue.priority])}>
+              <span className={clsx('badge', PRIORITY_COLORS[issue.priority as keyof typeof PRIORITY_COLORS])}>
                 {getPriorityDisplayName(issue.priority)}
               </span>
             </div>
@@ -238,7 +234,7 @@ const IssueDetail = () => {
             <div className="flex items-center space-x-2">
               <TagIcon className="h-4 w-4 text-gray-400" />
               <div className="flex flex-wrap gap-1">
-                {issue.tags.map((tag, index) => (
+                {issue.tags.map((tag: string, index: number) => (
                   <span
                     key={index}
                     className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800"

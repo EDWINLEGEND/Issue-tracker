@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 import User, { IUser } from '../models/User';
 import { UserRole } from '../../../shared/src/constants';
 
@@ -9,9 +9,14 @@ export interface AuthenticatedRequest extends Request {
 
 // Generate JWT token
 export const generateToken = (userId: string): string => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET!, {
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
-  });
+  const secret = process.env.JWT_SECRET;
+  const expiresIn = process.env.JWT_EXPIRES_IN || '7d';
+  
+  if (!secret) {
+    throw new Error('JWT_SECRET environment variable is required');
+  }
+  
+  return jwt.sign({ userId }, secret, { expiresIn });
 };
 
 // Verify JWT token middleware
@@ -23,7 +28,6 @@ export const authenticate = async (
   try {
     let token: string | undefined;
 
-    // Check for token in Authorization header
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
     }
@@ -37,10 +41,8 @@ export const authenticate = async (
     }
 
     try {
-      // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { userId: string };
       
-      // Find user by ID
       const user = await User.findById(decoded.userId);
       if (!user) {
         res.status(401).json({
@@ -50,7 +52,6 @@ export const authenticate = async (
         return;
       }
 
-      // Attach user to request object
       req.user = user;
       next();
     } catch (error) {
@@ -68,7 +69,6 @@ export const authenticate = async (
   }
 };
 
-// Role-based authorization middleware
 export const authorize = (...roles: UserRole[]) => {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
     if (!req.user) {
@@ -91,7 +91,6 @@ export const authorize = (...roles: UserRole[]) => {
   };
 };
 
-// Check if user can modify resource (owner or admin)
 export const checkResourceOwnership = (resourceUserField: string = 'createdBy') => {
   return (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
     if (!req.user) {
@@ -102,13 +101,11 @@ export const checkResourceOwnership = (resourceUserField: string = 'createdBy') 
       return;
     }
 
-    // Admin can modify any resource
     if (req.user.role === UserRole.ADMIN) {
       next();
       return;
     }
 
-    // Check if user owns the resource (will be validated in controller)
     next();
   };
 };

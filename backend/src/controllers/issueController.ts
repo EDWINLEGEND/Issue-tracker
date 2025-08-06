@@ -162,8 +162,8 @@ export const updateIssue = async (req: AuthenticatedRequest, res: Response): Pro
 
     // Check permissions
     const canEdit = req.user.role === UserRole.ADMIN || 
-                   issue.createdBy.toString() === req.user._id.toString() ||
-                   (issue.assignedTo && issue.assignedTo.toString() === req.user._id.toString());
+               issue.createdBy.toString() === (req.user._id as any).toString() ||
+               (issue.assignedTo && issue.assignedTo.toString() === (req.user._id as any).toString());
 
     if (!canEdit) {
       res.status(403).json({
@@ -242,7 +242,7 @@ export const deleteIssue = async (req: AuthenticatedRequest, res: Response): Pro
 
     // Check permissions (only creator or admin can delete)
     const canDelete = req.user.role === UserRole.ADMIN || 
-                     issue.createdBy.toString() === req.user._id.toString();
+                 issue.createdBy.toString() === (req.user._id as any).toString();
 
     if (!canDelete) {
       res.status(403).json({
