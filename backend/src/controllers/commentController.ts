@@ -117,7 +117,7 @@ export const updateComment = async (req: AuthenticatedRequest, res: Response): P
 
     // Check permissions (only creator or admin can update)
     const canUpdate = req.user.role === UserRole.ADMIN || 
-                     comment.createdBy.toString() === req.user._id.toString();
+                     comment.createdBy.toString() === (req.user._id as any).toString();
 
     if (!canUpdate) {
       res.status(403).json({
@@ -179,7 +179,7 @@ export const deleteComment = async (req: AuthenticatedRequest, res: Response): P
 
     // Check permissions (only creator or admin can delete)
     const canDelete = req.user.role === UserRole.ADMIN || 
-                     comment.createdBy.toString() === req.user._id.toString();
+                     comment.createdBy.toString() === (req.user._id as any).toString();
 
     if (!canDelete) {
       res.status(403).json({

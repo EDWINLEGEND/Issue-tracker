@@ -89,14 +89,14 @@ export const getRecentActivity = async (req: AuthenticatedRequest, res: Response
     const activity = [
       ...recentIssues.map(issue => ({
         type: 'issue_created',
-        message: `${issue.createdBy.username} created issue "${issue.title}"`,
+        message: `${(issue.createdBy as any).username} created issue "${issue.title}"`,
         user: issue.createdBy,
         issue: issue,
         timestamp: issue.createdAt
       })),
       ...recentComments.map(comment => ({
         type: 'comment_added',
-        message: `${comment.createdBy.username} commented on "${(comment.issueId as any).title}"`,
+        message: `${(comment.createdBy as any).username} commented on "${(comment.issueId as any).title}"`,
         user: comment.createdBy,
         comment: comment,
         timestamp: comment.createdAt

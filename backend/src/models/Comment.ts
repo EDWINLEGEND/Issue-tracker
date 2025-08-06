@@ -30,7 +30,7 @@ const commentSchema = new Schema<IComment>({
   timestamps: true,
   toJSON: {
     transform: function(doc, ret) {
-      delete ret.__v;
+      delete (ret as any).__v;
       return ret;
     }
   }
@@ -43,7 +43,7 @@ commentSchema.index({ createdAt: -1 });
 
 // Pre-populate creator information
 commentSchema.pre(/^find/, function(next) {
-  this.populate({
+  (this as any).populate({
     path: 'createdBy',
     select: 'username email role'
   });

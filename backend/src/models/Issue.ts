@@ -60,7 +60,7 @@ const issueSchema = new Schema<IIssue>({
   timestamps: true,
   toJSON: {
     transform: function(doc, ret) {
-      delete ret.__v;
+      delete (ret as any).__v;
       return ret;
     }
   }
@@ -88,7 +88,7 @@ issueSchema.set('toJSON', { virtuals: true });
 
 // Pre-populate creator and assignee information
 issueSchema.pre(/^find/, function(next) {
-  this.populate({
+  (this as any).populate({
     path: 'createdBy',
     select: 'username email role'
   }).populate({
